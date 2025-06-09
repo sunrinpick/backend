@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>게시글 목록</title>
+  </head>
+  <body>
+    <h1>게시글 목록</h1>
+    <a href="{% url 'article-create' %}">새 글 작성</a>
+    <ul>
+      {% for article in articles %}
+      <li>
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.content|linebreaks }}</p>
+        <hr />
+      </li>
+      {% empty %}
+      <li>게시글이 없습니다.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

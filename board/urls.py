@@ -1,9 +1,16 @@
 from django.urls import path
-from .views import *
+from . import views
 
-app_name='main'
 
-urlpatterns=[
-    path('',index),
-    path('blog/',blog),
+urlpatterns = [
+    path('articles/', views.article_list),
+    path('articles/<int:article_pk>/', views.article_detail),
+    path('comments/', views.comment_list),
+    path('comments/<int:comment_pk>/', views.comment_detail),
+
+    path('articles/<int:article_pk>/comments/', views.comment_create),
+    path('articles/page/', views.article_list_page, name='article-list'),
+    path('articles/create/', views.article_create_page, name='article-create'),
 ]
+    
+    
