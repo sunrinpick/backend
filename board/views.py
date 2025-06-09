@@ -10,3 +10,6 @@ def index(request):
 # blog.html 페이지를 부르는 blog 함수
 def blog(request):
     return render(request, 'main/blog.html')
+
+def hello(request):
+    return render(s)
