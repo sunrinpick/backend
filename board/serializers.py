@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Article, Comment
-
+from .models import Board
 
 class ArticleListSerializer(serializers.ModelSerializer):
 
@@ -22,4 +22,13 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
+        fields = '__all__'
+        
+
+
+class BoardSerializer(serializers.ModelSerializer):
+    articles = ArticleListSerializer(many=True, read_only=True)  # related_name='articles' 덕분에 가능
+
+    class Meta:
+        model = Board
         fields = '__all__'

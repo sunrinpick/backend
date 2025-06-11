@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>게시판 목록</title>
+  </head>
+  <body>
+    <h1>게시판 목록</h1>
+    <a href="{% url 'board-create-page' %}">새 게시판 만들기</a>
+    <ul>
+      {% for board in boards %}
+      <li>
+        {{ board.name }} - {{ board.description }}
+        <!-- 게시판에 글 쓰러 가는 링크 -->
+        <a href="{% url 'board-detail-page' board.pk %}">게시판 보기</a>
+        <a href="{% url 'board-article-create-page' board.pk %}">글 작성하기</a>
+      </li>
+      {% empty %}
+      <li>게시판이 없습니다.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
