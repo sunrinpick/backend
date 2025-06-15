@@ -1,0 +1,16 @@
+<!-- templates/boards/board_article_form.html -->
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ board.name }} - 글 작성</title>
+  </head>
+  <body>
+    <h1>[{{ board.name }}]에 글 작성</h1>
+    <form method="POST">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">작성</button>
+    </form>
+    <a href="{% url 'board-list-page' %}">게시판 목록</a>
+  </body>
+</html>
