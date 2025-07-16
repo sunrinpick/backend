@@ -6,7 +6,7 @@ class ArticleListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ('id', 'title', 'content')
+        fields = ('id', 'title', 'author', 'content', 'created_at')
 
 class CommentSerializer(serializers.ModelSerializer):
 

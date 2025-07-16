@@ -6,6 +6,9 @@ from .models import Article
 from .forms import ArticleForm
 from .forms import BoardForm  
 from .models import Board
+from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -88,6 +91,7 @@ def comment_detail(request, comment_pk):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def comment_create(request, article_pk):
     # article = Article.objects.get(pk=article_pk)
     article = get_object_or_404(Article, pk=article_pk)
@@ -102,6 +106,7 @@ def article_list_page(request):
     articles = Article.objects.all().order_by('-pk')
     return render(request, 'articles/board_list.html', {'articles': articles})
 
+@login_required
 def article_create_page(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
@@ -114,6 +119,7 @@ def article_create_page(request):
 
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def board_list(request):
     if request.method == 'GET':
         boards = Board.objects.all()
@@ -127,6 +133,7 @@ def board_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def board_detail(request, board_pk):
     board = get_object_or_404(Board, pk=board_pk)
 
@@ -145,6 +152,7 @@ def board_detail(request, board_pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def create_article_in_board(request, board_pk):
     board = get_object_or_404(Board, pk=board_pk)
     serializer = ArticleSerializer(data=request.data)
@@ -162,6 +170,7 @@ def board_list_page(request):
     return render(request, 'boards/boards_list.html', {'boards': boards})
 
 # 게시판 생성 페이지
+@login_required
 def board_create_page(request):
     if request.method == 'POST':
         form = BoardForm(request.POST)
@@ -174,6 +183,7 @@ def board_create_page(request):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def create_article_in_board(request, board_pk):
     board = get_object_or_404(Board, pk=board_pk)
     serializer = ArticleSerializer(data=request.data)
@@ -190,6 +200,7 @@ def list_articles_in_board(request, board_pk):
     return Response(serializer.data)
 
 
+@login_required
 def board_article_create_page(request, board_pk):
     board = get_object_or_404(Board, pk=board_pk)
     
